@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B232B">
+<title>Di Castro – Cantiere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ECEAE5;--ink:#1B232B;--muted:#5C6671;--card:#FFFFFF;--line:#CEC9C0;
+  --ddt:#F2C230;--ddt-ink:#1B232B;--form:#E2622A;--form-ink:#FFFFFF;--foto:#2A62C4;--foto-ink:#FFFFFF;
+  --ok:#2E8A4F;--err:#C23A2B;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"Barlow","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root{--bg:#151B21;--ink:#EDEFF1;--muted:#98A3AE;--card:#202830;--line:#33404C}}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45;-webkit-tap-highlight-color:transparent}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--foto);outline-offset:3px}
+.hidden{display:none!important}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 24px;min-height:100vh;display:flex;flex-direction:column}
+.screen{flex:1;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;min-height:48px;margin-bottom:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:22px}
+.who{margin-left:auto;color:var(--muted);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.iconbtn{border:1px solid var(--line);background:var(--card);border-radius:12px;min-height:48px;display:flex;align-items:center;gap:6px;padding:0 14px;font-family:var(--display);font-weight:700;font-size:20px}
+.iconbtn svg{width:22px;height:22px}
+.big{flex:1;min-height:150px;border:0;border-radius:22px;margin-bottom:14px;display:flex;align-items:center;gap:18px;padding:0 24px;text-align:left;transition:transform .08s}
+.big:active{transform:scale(.98)}
+.big:last-child{margin-bottom:0}
+.big svg{width:56px;height:56px;flex:none}
+.big .lbl{font-family:var(--display);font-weight:800;font-size:clamp(48px,14vw,68px);line-height:.9;display:block}
+.big .sub{font-size:16px;opacity:.85;display:block;margin-top:6px}
+.t-ddt{background:var(--ddt);color:var(--ddt-ink)}.t-formulari{background:var(--form);color:var(--form-ink)}.t-foto{background:var(--foto);color:var(--foto-ink)}
+.band{border-radius:18px;padding:16px 20px;margin-bottom:16px}
+.band h1{margin:0;font-family:var(--display);font-weight:800;font-size:40px;line-height:1}
+.band p{margin:4px 0 0;font-size:17px;opacity:.9}
+.search{width:100%;height:56px;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 16px;font-size:18px;margin-bottom:12px}
+.list{display:flex;flex-direction:column;gap:10px}
+.row{width:100%;min-height:76px;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:12px 18px;text-align:left}
+.row:active{background:var(--bg)}
+.row .n{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.05;display:block}
+.row .a{color:var(--muted);font-size:15px;display:block;margin-top:2px}
+.empty{border:2px dashed var(--line);border-radius:16px;padding:24px;text-align:center;color:var(--muted)}
+.pickers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.pick{min-height:120px;border-radius:18px;border:2px solid var(--ink);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-weight:700;font-size:24px;line-height:1;padding:10px}
+.pick svg{width:38px;height:38px}
+.pick.primary{background:var(--ink);color:var(--bg)}
+.queue{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-bottom:14px}
+.qi{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.qi img{width:100%;height:100%;object-fit:cover;display:block}
+.qi .pdf{width:100%;height:100%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:26px;color:var(--err)}
+.qi .x{position:absolute;top:4px;right:4px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:20px;line-height:1}
+.qi .st{position:absolute;left:0;right:0;bottom:0;padding:4px 6px;font-size:13px;font-weight:600;color:#fff;background:rgba(0,0,0,.6)}
+.qi .st.ok{background:var(--ok)}.qi .st.err{background:var(--err)}
+label.fl{display:block;font-weight:600;margin:4px 0 6px}
+textarea{width:100%;min-height:64px;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:12px 14px;font-size:17px;resize:vertical}
+.sendbar{position:sticky;bottom:0;padding:12px 0 8px;background:linear-gradient(to top,var(--bg) 75%,transparent);margin-top:auto}
+.send{width:100%;height:68px;border:0;border-radius:18px;font-family:var(--display);font-weight:800;font-size:30px}
+.send:disabled{opacity:.4;cursor:not-allowed}
+.msg{border-radius:14px;padding:14px 16px;margin-bottom:14px;font-weight:600}
+.msg.err{background:color-mix(in srgb,var(--err) 14%,var(--card));color:var(--err)}
+.done{justify-content:center;gap:14px;text-align:center}
+.tick{width:96px;height:96px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;margin:0 auto 6px}
+.tick svg{width:56px;height:56px}
+.done h1,.login h1{font-family:var(--display);font-weight:800;font-size:48px;margin:0;line-height:1}
+.done p{margin:0 0 10px;color:var(--muted);font-size:18px}
+.btn2{height:64px;border-radius:16px;border:2px solid var(--ink);background:var(--card);font-family:var(--display);font-weight:700;font-size:24px;width:100%}
+.btn2.solid{background:var(--ink);color:var(--bg)}
+.login{justify-content:center;gap:16px}
+.login p{margin:0;color:var(--muted)}
+.pin{width:100%;height:80px;border:2px solid var(--ink);border-radius:18px;background:var(--card);text-align:center;font-family:var(--display);font-weight:700;font-size:44px;letter-spacing:.3em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="s-login" class="screen login hidden">
+  <div class="brand">Di Castro</div>
+  <h1>Inserisci il PIN</h1>
+  <p>Il PIN personale te lo dà l'ufficio tecnico. Lo inserisci una volta sola su questo telefono.</p>
+  <input id="pin" class="pin" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="8" aria-label="PIN">
+  <div id="login-msg"></div>
+  <button class="btn2 solid" id="btn-login">Entra</button>
+</section>
+
+<section id="s-home" class="screen hidden">
+  <div class="top">
+    <span class="brand">Di Castro</span>
+    <span class="who" id="who"></span>
+    <button class="iconbtn" id="btn-logout" aria-label="Cambia utente">Esci</button>
+  </div>
+  <button class="big t-ddt" data-tipo="ddt">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h14v11H1z"/><path d="M15 8h4l3 3v4h-7z"/><circle cx="5.5" cy="17.5" r="2"/><circle cx="18.5" cy="17.5" r="2"/></svg>
+    <span><span class="lbl">DDT</span><span class="sub">Documento di trasporto</span></span>
+  </button>
+  <button class="big t-formulari" data-tipo="formulari">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+    <span><span class="lbl">Formulari</span><span class="sub">Rifiuti (FIR)</span></span>
+  </button>
+  <button class="big t-foto" data-tipo="foto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    <span><span class="lbl">Foto</span><span class="sub">Avanzamento lavori</span></span>
+  </button>
+</section>
+
+<section id="s-cantieri" class="hidden">
+  <div class="top"><button class="iconbtn" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Indietro</button></div>
+  <div class="band" id="band-c"><h1 id="c-title"></h1><p>Scegli il cantiere</p></div>
+  <input class="search hidden" id="search" type="search" placeholder="Cerca cantiere" autocomplete="off">
+  <div class="list" id="c-list"></div>
+</section>
+
+<section id="s-fase" class="screen hidden">
+  <div class="top"><button class="iconbtn" data-go="cantieri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Cantieri</button></div>
+  <div class="band t-foto"><h1>Foto</h1><p id="f-cant"></p></div>
+  <button class="big t-foto" data-fase="pre"><span><span class="lbl">Prima</span><span class="sub">Prima dei lavori</span></span></button>
+  <button class="big t-foto" data-fase="dur"><span><span class="lbl">Durante</span><span class="sub">Durante i lavori</span></span></button>
+  <button class="big t-foto" data-fase="dop"><span><span class="lbl">Dopo</span><span class="sub">Lavori finiti</span></span></button>
+</section>
+
+<section id="s-upload" class="screen hidden">
+  <div class="top"><button class="iconbtn" data-go="cantieri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Cantieri</button></div>
+  <div class="band" id="band-u"><h1 id="u-title"></h1><p id="u-cant"></p></div>
+  <div id="u-msg"></div>
+  <div class="pickers">
+    <button class="pick primary" id="btn-cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Scatta foto</button>
+    <button class="pick" id="btn-gal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Dal telefono</button>
+  </div>
+  <input type="file" id="in-cam" accept="image/*" capture="environment" class="hidden">
+  <input type="file" id="in-gal" multiple class="hidden">
+  <div class="queue" id="queue"></div>
+  <label class="fl" for="nota">Nota (facoltativa)</label>
+  <textarea id="nota"></textarea>
+  <div class="sendbar"><button class="send" id="send" disabled>Invia</button></div>
+</section>
+
+<section id="s-done" class="screen done hidden">
+  <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <h1>Inviato</h1>
+  <p id="done-txt"></p>
+  <button class="btn2 solid" id="done-more">Carica altro qui</button>
+  <button class="btn2" data-go="home">Torna all'inizio</button>
+</section>
+
+</div>
+<script>
+/* ===== CONFIGURAZIONE: URL base dei webhook n8n (produzione) ===== */
+const API_BASE = "https://TUO-DOMINIO-N8N/webhook";
+/* ================================================================ */
+
+(() => {
+  const TIPI = {
+    ddt:{label:"DDT",cls:"t-ddt",accept:"image/*,application/pdf",hint:"Es. fornitore, numero DDT, materiale"},
+    formulari:{label:"Formulari",cls:"t-formulari",accept:"image/*,application/pdf",hint:"Es. numero FIR, trasportatore, CER"},
+    foto:{label:"Foto",cls:"t-foto",accept:"image/*",hint:"Es. zona, lavorazione"}
+  };
+  const $ = s => document.querySelector(s);
+  const el = (tag, attrs={}, kids=[]) => {
+    const n = document.createElement(tag);
+    for (const [k,v] of Object.entries(attrs)) {
+      if (k==="class") n.className=v; else if (k==="text") n.textContent=v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2),v); else n.setAttribute(k,v);
+    }
+    for (const c of [].concat(kids)) if (c) n.append(c);
+    return n;
+  };
+  const store = {
+    get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+    set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+    del(k){ try { localStorage.removeItem(k); } catch {} }
+  };
+  const S = { pin:null, nome:"", cantieri:[], tipo:null, cantiere:null, fase:"", queue:[], sending:false };
+  const FASI = { pre:"Prima dei lavori", dur:"Durante i lavori", dop:"Dopo i lavori" };
+
+  function go(s){
+    ["login","home","cantieri","fase","upload","done"].forEach(x => $("#s-"+x).classList.toggle("hidden", x!==s));
+    window.scrollTo(0,0);
+  }
+  function msg(sel, text){ const b=$(sel); b.replaceChildren(); if(text) b.append(el("div",{class:"msg err",text})); }
+
+  async function post(path, fields, file, timeoutMs=30000){
+    const fd = new FormData();
+    for (const [k,v] of Object.entries(fields)) fd.append(k, v ?? "");
+    if (file) fd.append("file", file.blob, file.name);
+    const ctl = new AbortController(); const t = setTimeout(()=>ctl.abort(), timeoutMs);
+    try {
+      const r = await fetch(API_BASE + path, {method:"POST", body:fd, signal:ctl.signal});
+      let data = {}; try { data = await r.json(); } catch {}
+      if (!r.ok || data.ok === false) throw Object.assign(new Error(data.errore || ("Errore " + r.status)), {status:r.status});
+      return data;
+    } catch(e){
+      if (e.name === "AbortError") throw new Error("Connessione lenta o assente. Riprova.");
+      if (e instanceof TypeError) throw new Error("Nessuna connessione. Riprova quando c'è campo.");
+      throw e;
+    } finally { clearTimeout(t); }
+  }
+
+  /* ---- login & dati ---- */
+  async function loadDati(pin){
+    const d = await post("/app-dati", {pin});
+    S.pin = pin; S.nome = d.nome || ""; S.cantieri = d.cantieri || [];
+    store.set("dc_pin", pin); store.set("dc_cantieri", S.cantieri); store.set("dc_nome", S.nome);
+    $("#who").textContent = S.nome;
+  }
+  $("#btn-login").addEventListener("click", async () => {
+    const pin = $("#pin").value.trim();
+    if (pin.length < 4){ msg("#login-msg","Il PIN ha almeno 4 cifre."); return; }
+    $("#btn-login").disabled = true; msg("#login-msg","");
+    try { await loadDati(pin); go("home"); }
+    catch(e){ msg("#login-msg", e.status === 401 ? "PIN non valido." : e.message); }
+    finally { $("#btn-login").disabled = false; }
+  });
+  $("#pin").addEventListener("keydown", e => { if (e.key === "Enter") $("#btn-login").click(); });
+  $("#btn-logout").addEventListener("click", () => {
+    ["dc_pin","dc_cantieri","dc_nome"].forEach(store.del);
+    S.pin = null; $("#pin").value = ""; go("login");
+  });
+
+  /* ---- navigazione ---- */
+  document.addEventListener("click", e => {
+    const g = e.target.closest("[data-go]"); if (!g) return;
+    if (g.dataset.go === "cantieri" && g.closest("#s-upload") && S.tipo === "foto"){ resetQueue(); go("fase"); }
+    else if (g.dataset.go === "cantieri") openCantieri(S.tipo); else { resetQueue(); go(g.dataset.go); }
+  });
+  document.querySelectorAll(".big[data-tipo]").forEach(b => b.addEventListener("click", () => openCantieri(b.dataset.tipo)));
+
+  /* ---- cantieri ---- */
+  function openCantieri(tipo){
+    S.tipo = tipo;
+    $("#band-c").className = "band " + TIPI[tipo].cls;
+    $("#c-title").textContent = TIPI[tipo].label;
+    $("#search").value = "";
+    renderCantieri(); go("cantieri");
+    // aggiorna in background: la lista in cache resta visibile se non c'è campo
+    loadDati(S.pin).then(renderCantieri).catch(e => { if (e.status === 401) $("#btn-logout").click(); });
+  }
+  function renderCantieri(){
+    const list = $("#c-list"); list.replaceChildren();
+    const q = $("#search").value.trim().toLowerCase();
+    $("#search").classList.toggle("hidden", S.cantieri.length <= 6);
+    if (!S.cantieri.length){ list.append(el("div",{class:"empty",text:"Nessun cantiere attivo. Avvisa l'ufficio tecnico."})); return; }
+    const rows = S.cantieri.filter(c => !q || (c.nome+" "+(c.indirizzo||"")).toLowerCase().includes(q));
+    if (!rows.length){ list.append(el("div",{class:"empty",text:"Nessun cantiere trovato."})); return; }
+    for (const c of rows) list.append(el("button",{class:"row",onclick:()=>scegliCantiere(c)},[
+      el("span",{class:"n",text:c.nome}), c.indirizzo ? el("span",{class:"a",text:c.indirizzo}) : null
+    ]));
+  }
+  $("#search").addEventListener("input", renderCantieri);
+
+  /* ---- fase foto ---- */
+  function scegliCantiere(c){
+    S.cantiere = c; S.fase = "";
+    if (S.tipo === "foto"){ $("#f-cant").textContent = c.nome; go("fase"); }
+    else openUpload(c);
+  }
+  document.querySelectorAll(".big[data-fase]").forEach(b => b.addEventListener("click", () => { S.fase = b.dataset.fase; openUpload(S.cantiere); }));
+
+  /* ---- upload ---- */
+  function openUpload(c){
+    S.cantiere = c;
+    $("#band-u").className = "band " + TIPI[S.tipo].cls;
+    $("#u-title").textContent = TIPI[S.tipo].label;
+    $("#u-cant").textContent = c.nome + (S.tipo === "foto" && S.fase ? " – " + FASI[S.fase] : "");
+    $("#in-gal").setAttribute("accept", TIPI[S.tipo].accept);
+    $("#send").className = "send " + TIPI[S.tipo].cls;
+    $("#nota").placeholder = TIPI[S.tipo].hint;
+    resetQueue(); msg("#u-msg",""); go("upload");
+  }
+  function resetQueue(){
+    S.queue.forEach(q => q.preview && URL.revokeObjectURL(q.preview));
+    S.queue = []; $("#nota").value = ""; renderQueue();
+  }
+  $("#btn-cam").addEventListener("click", () => $("#in-cam").click());
+  $("#btn-gal").addEventListener("click", () => $("#in-gal").click());
+  ["#in-cam","#in-gal"].forEach(id => $(id).addEventListener("change", e => {
+    for (const f of e.target.files) addFile(f); e.target.value = "";
+  }));
+  function addFile(f){
+    const isPdf = f.type === "application/pdf" || /\.pdf$/i.test(f.name);
+    const isImg = f.type.startsWith("image/") || /\.(jpe?g|png|heic|heif|webp)$/i.test(f.name);
+    if (!isPdf && !isImg){ msg("#u-msg","Formato non accettato: "+f.name+". Carica foto o PDF."); return; }
+    if (isPdf && S.tipo === "foto"){ msg("#u-msg","Nella sezione Foto carica solo immagini."); return; }
+    S.queue.push({file:f, isPdf, preview:isImg ? URL.createObjectURL(f) : null, status:""});
+    renderQueue();
+  }
+  function renderQueue(){
+    const q = $("#queue"); q.replaceChildren();
+    S.queue.forEach((it,i) => {
+      const box = el("div",{class:"qi"});
+      box.append(it.isPdf ? el("div",{class:"pdf",text:"PDF"}) : el("img",{src:it.preview,alt:""}));
+      if (!S.sending && it.status !== "ok") box.append(el("button",{class:"x","aria-label":"Rimuovi",text:"×",onclick:()=>{ if(it.preview) URL.revokeObjectURL(it.preview); S.queue.splice(i,1); renderQueue(); }}));
+      if (it.status) box.append(el("div",{class:"st "+(it.status==="ok"?"ok":it.status==="err"?"err":""),text:it.status==="ok"?"Inviato":it.status==="err"?"Errore":"Invio…"}));
+      q.append(box);
+    });
+    const pending = S.queue.filter(x => x.status !== "ok").length;
+    const b = $("#send");
+    b.disabled = !pending || S.sending;
+    b.textContent = S.sending ? "Invio in corso…" : pending ? `Invia ${pending} file` : "Invia";
+  }
+  async function toJpeg(file){
+    const MAX = 2400;
+    let src;
+    try { src = await createImageBitmap(file, {imageOrientation:"from-image"}); }
+    catch { src = await new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=rej; im.src=URL.createObjectURL(file); }); }
+    const r = Math.min(1, MAX/Math.max(src.width, src.height));
+    const c = document.createElement("canvas"); c.width = Math.round(src.width*r); c.height = Math.round(src.height*r);
+    c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
+    return await new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error("Impossibile leggere la foto.")),"image/jpeg",0.85));
+  }
+  $("#send").addEventListener("click", async () => {
+    if (S.sending) return;
+    S.sending = true; msg("#u-msg",""); renderQueue();
+    const nota = $("#nota").value.trim();
+    let ok = 0, lastErr = "";
+    for (const it of S.queue){
+      if (it.status === "ok") continue;
+      it.status = "busy"; renderQueue();
+      try {
+        const blob = it.isPdf ? it.file : await toJpeg(it.file);
+        const name = it.isPdf ? (it.file.name || "documento.pdf") : "foto.jpg";
+        await post("/app-upload", {pin:S.pin, tipo:S.tipo, fase:S.fase, cantiere_id:S.cantiere.id, nota}, {blob, name}, 90000);
+        it.status = "ok"; ok++;
+      } catch(e){
+        it.status = "err"; lastErr = e.message;
+        if (e.status === 401){ S.sending=false; $("#btn-logout").click(); return; }
+      }
+      renderQueue();
+    }
+    S.sending = false; renderQueue();
+    const failed = S.queue.filter(x => x.status !== "ok").length;
+    if (!failed){
+      $("#done-txt").textContent = `${ok} file in ${TIPI[S.tipo].label}${S.fase ? " (" + FASI[S.fase] + ")" : ""} – ${S.cantiere.nome}`;
+      go("done");
+    } else msg("#u-msg", `${failed} file non inviati. ${lastErr} Premi di nuovo Invia per riprovare.`);
+  });
+  $("#done-more").addEventListener("click", () => openUpload(S.cantiere));
+
+  /* ---- avvio ---- */
+  const pin = store.get("dc_pin");
+  if (pin){
+    S.pin = pin; S.cantieri = store.get("dc_cantieri") || []; S.nome = store.get("dc_nome") || "";
+    $("#who").textContent = S.nome; go("home");
+  } else go("login");
+})();
+</script>
+</body>
+</html>
